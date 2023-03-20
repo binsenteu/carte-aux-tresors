@@ -14,6 +14,12 @@ import static com.carbon.carteauxtresors.TreasureHuntApplication.LOGGER;
 @RequiredArgsConstructor
 public class AdventurerService {
 
+    /**
+     * Main methode to build adventurers from the input file data
+     * @param inputFile input file with the treasure hunt data
+     * @param treasureMapHashMap treasure map hashmap including mountains and treasures positions
+     * @return list of adventurers
+     */
     public List<Adventurer> buildAdventurers(List<String> inputFile, Map<Position, CellType> treasureMapHashMap) {
         List<Adventurer> adventurerList = new ArrayList<>();
 
@@ -30,6 +36,12 @@ public class AdventurerService {
         return adventurerList;
     }
 
+    /**
+     * Build individual adventurer
+     * @param adventurerLine single adventurer line from the input file data
+     * @param treasureMapHashMap treasure map hashmap including mountains and treasures positions
+     * @return Individual adventurer
+     */
     private Adventurer buildAdventurer(String adventurerLine, Map<Position, CellType> treasureMapHashMap) {
         Adventurer adventurer = new Adventurer();
 

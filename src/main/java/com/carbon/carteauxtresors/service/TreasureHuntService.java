@@ -21,6 +21,11 @@ public class TreasureHuntService {
 
     private final TreasureHuntRepository treasureHuntRepository;
 
+    /**
+     * Main method to manage the treasure hunt
+     * @param filename name of the input file containing data for the treasure hunt
+     * @throws Exception Exception occurred during the execution of the application
+     */
     public void startTreasureHunt(String filename) throws Exception {
 
         LOGGER.info("[STEP][1/5] Read input file");
@@ -41,6 +46,11 @@ public class TreasureHuntService {
         treasureHuntRepository.writeOutputFile(filename, outputString);
     }
 
+    /**
+     * Hunt part of the treasure hunt
+     * @param treasureMap treasure map containing the mountains and treasures
+     * @param adventurerList list of adventurers taking part in the treasure hunt
+     */
     private void hunt(TreasureMap treasureMap, List<Adventurer> adventurerList) {
         int maxTurns = adventurerList.stream().map(adventurer -> adventurer.getMovementSequence().length)
                 .max(Integer::compare).orElse(0);
@@ -58,6 +68,14 @@ public class TreasureHuntService {
         }
     }
 
+    /**
+     * Manages an adventurer's move
+     * @param adventurer adventurer playing
+     * @param currentTurn index counting the current turn
+     * @param treasureMap treasure map containing the mountains and treasures
+     * @param adventurerList list of adventurers
+     * @throws IllegalArgumentException unknown move in adventurer's movement sequence
+     */
     private void makeMove(Adventurer adventurer, int currentTurn, TreasureMap treasureMap, List<Adventurer> adventurerList)
             throws IllegalArgumentException {
         switch (adventurer.getMovementSequence()[currentTurn]) {
@@ -89,11 +107,24 @@ public class TreasureHuntService {
         }
     }
 
+    /**
+     * Finds the adventurer's target position for its current turn
+     * @param adventurer adventurer playing
+     * @return adventurer's target position
+     */
     private Position findTargetPosition(Adventurer adventurer) {
         return new Position (adventurer.getPosition().getX() + adventurer.getDirection().getXShift(),
                 adventurer.getPosition().getY() + adventurer.getDirection().getYShift());
     }
 
+    /**
+     * Checks if the target position is valid. Target position is not valid if it is out of the map bounds, on a mountain,
+     * or on another adventurer
+     * @param targetPosition target position to check
+     * @param treasureMap treasure map containing the mountains and treasures
+     * @param adventurerList list of adventurers
+     * @return boolean indicating if the target position is valid
+     */
     private boolean isValidTargetPosition(Position targetPosition , TreasureMap treasureMap, List<Adventurer> adventurerList) {
         if (targetPosition.isPositionOutOfBounds(treasureMap.getMapSize()) ||
                 treasureMap.getTreasureMapHashMap().get(targetPosition) instanceof Mountain) return false;
@@ -102,6 +133,12 @@ public class TreasureHuntService {
         return !adventurersPositionList.contains(targetPosition);
     }
 
+    /**
+     * Converts the game data into a string
+     * @param treasureMap treasure map containing the mountains and treasures
+     * @param adventurerList list of adventurers
+     * @return treasure hunt data in a string format
+     */
     public String buildStringForOutputFile(TreasureMap treasureMap, List<Adventurer> adventurerList) {
         StringJoiner lineJoiner = new StringJoiner(System.lineSeparator());
 

@@ -16,7 +16,13 @@ import static com.carbon.carteauxtresors.TreasureHuntApplication.LOGGER;
 
 @Repository
 public class TreasureHuntRepository {
-
+    /**
+     * Reads a file
+     * @param filename name of the file to read
+     * @param filepath filepath of the file to read
+     * @return List of String from the file
+     * @throws IOException if an I/O error occurs opening the file
+     */
     public List<String> readInputFile(String filename, String filepath) throws IOException {
         LOGGER.info(String.format("Reading input file [%s]", filename));
         Path path = Paths.get(filepath + File.separator + filename);
@@ -28,6 +34,12 @@ public class TreasureHuntRepository {
         return data;
     }
 
+    /**
+     * Writes a file to the user directory
+     * @param filename name of the file to write. A prefix "output-" will be added to the file name.
+     * @param fileContent content of the file
+     * @throws IOException if an I/O error occurs
+     */
     public void writeOutputFile(String filename, String fileContent) throws IOException {
 
         String outputFileName = Paths.get("output-" + filename).toString();

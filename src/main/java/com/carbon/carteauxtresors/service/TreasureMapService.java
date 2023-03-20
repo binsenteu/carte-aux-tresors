@@ -11,6 +11,13 @@ import static com.carbon.carteauxtresors.TreasureHuntApplication.LOGGER;
 @Service
 @RequiredArgsConstructor
 public class TreasureMapService {
+    /**
+     * Main method used to buil the treasure map
+     * @param inputFile  input file with the treasure hunt data
+     * @return treasure map containing mountains and treasures
+     * @throws NoSuchElementException if data is not found in the input file
+     * @throws IllegalArgumentException if data in the input file is not as expected
+     */
     public TreasureMap buildTreasureMap(List<String> inputFile) throws NoSuchElementException, IllegalArgumentException {
         TreasureMap treasureMap = new TreasureMap();
 
@@ -24,6 +31,12 @@ public class TreasureMapService {
         return treasureMap;
     }
 
+    /**
+     * Places mountains and treasures on the treasure map
+     * @param inputFile input file with the treasure hunt data
+     * @param mapSize Position object defining the size of the map
+     * @return Hashmap containing mountains and treasures
+     */
     private Map<Position, CellType> placeMountainsAndTreasures(List<String> inputFile, Position mapSize) {
 
         //Build and place mountains
@@ -42,6 +55,12 @@ public class TreasureMapService {
         return treasureMapHashMap;
     }
 
+    /**
+     * Builds the treasures from the input file data
+     * @param treasureLines lines from the input file containing the treasures' information
+     * @param mapSize size of the map
+     * @return Map with the position of the treasure as key, and the treasure itself as value
+     */
     private Map<Position, CellType> buildTreasuresHashMap(List<String> treasureLines, Position mapSize) {
         Map<Position, CellType> treasureMap = new HashMap<>();
         for (String treasureLine : treasureLines) {
@@ -59,6 +78,12 @@ public class TreasureMapService {
         return treasureMap;
     }
 
+    /**
+     * Builds the mountains from the input file data
+     * @param mountainLines lines from the input file containing the moutains' information
+     * @param mapSize size of the map
+     * @return Map with the position of the mountain as key, and the treasure itself as value
+     */
     private Map<Position, CellType> buildMountainsHashMap(List<String> mountainLines, Position mapSize) {
         Map<Position, CellType> mountainMap = new HashMap<>();
         for (String mountainLine : mountainLines) {
@@ -76,12 +101,24 @@ public class TreasureMapService {
         return mountainMap;
     }
 
+    /**
+     * Builds the size of the treasure map
+     * @param inputFile input file with the treasure hunt data
+     * @return Position object describing the size of the map
+     * @throws RuntimeException if data in the input file is not as expected
+     */
     private Position buildTreasureMapSize(List<String> inputFile) throws RuntimeException {
         String mapLine = getMapLineFromInputFile(inputFile);
         String[] lineSplit = mapLine.split(" - ");
         return new Position(lineSplit[1], lineSplit[2]);
     }
 
+    /**
+     * Extract the line regarding the map in the input file
+     * @param inputFile input file with the treasure hunt data
+     * @return line regarding the map in the input file
+     * @throws NoSuchElementException if data is not found in the input file
+     */
     private String getMapLineFromInputFile(List<String> inputFile) throws NoSuchElementException {
         Optional<String> mapSizeOptional = inputFile.stream().filter(line -> line.startsWith("C")).findFirst();
         if (mapSizeOptional.isPresent()) {
