@@ -1,6 +1,6 @@
 # Carte aux trésors
 ## Description du projet
-Ce projet est une proposition d'implémentation de l'exercice pratqiue "La carte aux trésors" donnée par Carbon IT.
+Ce projet est une proposition d'implémentation de l'exercice pratique "La carte aux trésors" donnée par X.
 
 ## Technologies
 - Spring Boot 3.0.4
